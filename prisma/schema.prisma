@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?  // Hashed password
+  image     String?
+  role      String   // "seeker", "employee", "admin"
+  skills    String?  // Comma separated skills (e.g. "React, Node, Prisma")
+  status    String   @default("Active") // "Active", "Pending", "Banned"
+  riskScore String   @default("Low")    // "Low", "Medium", "High"
+  college   String?
+  hometown  String?
+  resumeUrl String?    // URL to resume (Google Drive, LinkedIn, etc.)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  postedJobs Job[]
+  referrals  Referral[]
+  walkInDrives WalkInDrive[]
+  
+  messagesSent     Message[] @relation("Sender")
+  messagesReceived Message[] @relation("Receiver")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  senderId  String
+  receiverId String
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+  
+  sender    User     @relation("Sender", fields: [senderId], references: [id])
+  receiver  User     @relation("Receiver", fields: [receiverId], references: [id])
+}
+
+model Job {
+  id          String   @id @default(cuid())
+  title       String
+  company     String
+  location    String
+  salary      String
+  type        String
+  description String?
+  postedById  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  validityDays Int?
+  expiryDate  DateTime?
+
+  // Relations
+  postedBy    User?      @relation(fields: [postedById], references: [id])
+  referrals   Referral[]
+}
+
+model Referral {
+  id          String   @id @default(cuid())
+  jobId       String
+  seekerId    String
+  status      String   @default("Pending") // "Pending", "Accepted", "Rejected"
+  note        String?
+  resumeUrl   String?
+  score       Int      @default(0) // AI Score (0-100)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  job         Job      @relation(fields: [jobId], references: [id])
+  seeker      User     @relation(fields: [seekerId], references: [id])
+}
+
+model WalkInDrive {
+  id            String   @id @default(cuid())
+  company       String
+  location      String
+  timing        String
+  qualification String
+  postedById    String
+  createdAt     DateTime @default(now())
+
+  // Relations
+  postedBy      User     @relation(fields: [postedById], references: [id])
+}
