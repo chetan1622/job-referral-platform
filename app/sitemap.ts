@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://hirehunt-referral.netlify.app' // NOTE: Replace with actual URL if different
+    const baseUrl = 'http://localhost:3000' // NOTE: Replace with actual URL if different
 
     return [
         {

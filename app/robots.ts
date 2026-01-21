@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-    const baseUrl = 'https://hirehunt-referral.netlify.app' // NOTE: Replace with actual URL
+    const baseUrl = 'http://localhost:3000' // NOTE: Replace with actual URL
 
     return {
         rules: {
