@@ -26,6 +26,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
+  // New fields
+  mobile      String?
+  company     String?
+  designation String?
+  linkedinUrl String?
+  
   // Relations
   postedJobs Job[]
   referrals  Referral[]

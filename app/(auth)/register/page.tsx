@@ -43,6 +43,7 @@ function RegisterPageContent() {
         mobile: "",
         company: "", // Employee specific
         designation: "", // Employee specific
+        linkedin: "", // Employee specific
         resumeUrl: "" // Seeker specific
     })
 
@@ -62,9 +63,12 @@ function RegisterPageContent() {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
-                    password: formData.password,
                     role: role,
-                    resumeUrl: formData.resumeUrl
+                    resumeUrl: formData.resumeUrl,
+                    mobile: formData.mobile,
+                    company: formData.company,
+                    designation: formData.designation,
+                    linkedinUrl: formData.linkedin
                 })
             })
 
@@ -91,7 +95,7 @@ function RegisterPageContent() {
                 </p>
             </div>
 
-            <Card className="border-none shadow-xl bg-white/80 backdrop-blur-md">
+            <Card className="border shadow-xl bg-card/95 backdrop-blur-md">
                 <CardContent className="p-6 md:p-8">
                     <form onSubmit={handleRegister} className="space-y-6">
                         {/* Role Toggle with Segmented Control look */}
@@ -102,8 +106,8 @@ function RegisterPageContent() {
                                 className={cn(
                                     "px-4 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2",
                                     role === "seeker"
-                                        ? "bg-white shadow-sm text-primary"
-                                        : "text-muted-foreground hover:text-foreground hover:bg-white/50"
+                                        ? "bg-background shadow-sm text-foreground"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                                 )}
                             >
                                 <span className="w-2 h-2 rounded-full bg-blue-500" />
@@ -115,8 +119,8 @@ function RegisterPageContent() {
                                 className={cn(
                                     "px-4 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2",
                                     role === "employee"
-                                        ? "bg-white shadow-sm text-primary"
-                                        : "text-muted-foreground hover:text-foreground hover:bg-white/50"
+                                        ? "bg-background shadow-sm text-foreground"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                                 )}
                             >
                                 <span className="w-2 h-2 rounded-full bg-purple-500" />
@@ -129,11 +133,11 @@ function RegisterPageContent() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Full Name</Label>
-                                    <Input id="name" placeholder="John Doe" value={formData.name} onChange={handleInputChange} required className="bg-muted/30 border-muted-foreground/20 focus:bg-white transition-colors" />
+                                    <Input id="name" placeholder="John Doe" value={formData.name} onChange={handleInputChange} required className="bg-background/50 border-input focus:bg-background transition-colors" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="mobile" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Mobile</Label>
-                                    <Input id="mobile" placeholder="+91 9876543210" value={formData.mobile} onChange={handleInputChange} required className="bg-muted/30 border-muted-foreground/20 focus:bg-white transition-colors" />
+                                    <Input id="mobile" placeholder="+91 9876543210" value={formData.mobile} onChange={handleInputChange} required className="bg-background/50 border-input focus:bg-background transition-colors" />
                                 </div>
                             </div>
 
@@ -141,12 +145,12 @@ function RegisterPageContent() {
                                 <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                                     {role === "employee" ? "Official Work Email" : "Email Address"}
                                 </Label>
-                                <Input id="email" type="email" placeholder={role === "employee" ? "name@company.com" : "john@example.com"} value={formData.email} onChange={handleInputChange} required className="bg-muted/30 border-muted-foreground/20 focus:bg-white transition-colors" />
+                                <Input id="email" type="email" placeholder={role === "employee" ? "name@company.com" : "john@example.com"} value={formData.email} onChange={handleInputChange} required className="bg-background/50 border-input focus:bg-background transition-colors" />
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="password" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Password</Label>
-                                <Input id="password" type="password" placeholder="••••••••" value={formData.password} onChange={handleInputChange} required className="bg-muted/30 border-muted-foreground/20 focus:bg-white transition-colors" />
+                                <Input id="password" type="password" placeholder="••••••••" value={formData.password} onChange={handleInputChange} required className="bg-background/50 border-input focus:bg-background transition-colors" />
                             </div>
 
                             {/* Role Specific Fields */}
@@ -156,7 +160,7 @@ function RegisterPageContent() {
                                         <div className="space-y-2">
                                             <Label htmlFor="experience" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Experience</Label>
                                             <Select>
-                                                <SelectTrigger className="bg-muted/30 border-muted-foreground/20">
+                                                <SelectTrigger className="bg-background/50 border-input">
                                                     <SelectValue placeholder="Select..." />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -168,18 +172,18 @@ function RegisterPageContent() {
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="salary" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Expected LPA</Label>
-                                            <Input id="salary" placeholder="e.g. 5-8" className="bg-muted/30 border-muted-foreground/20" />
+                                            <Input id="salary" placeholder="e.g. 5-8" className="bg-background/50 border-input" />
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
                                         <Label htmlFor="education" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Education</Label>
-                                        <Input id="education" placeholder="e.g. B.Tech Computer Science" required className="bg-muted/30 border-muted-foreground/20" />
+                                        <Input id="education" placeholder="e.g. B.Tech Computer Science" required className="bg-background/50 border-input" />
                                     </div>
 
                                     <div className="space-y-2">
                                         <Label htmlFor="resumeUrl" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Resume Link (Google Drive / LinkedIn)</Label>
-                                        <Input id="resumeUrl" placeholder="https://drive.google.com/file/d/..." value={formData.resumeUrl} onChange={handleInputChange} className="bg-muted/30 border-muted-foreground/20" />
+                                        <Input id="resumeUrl" placeholder="https://drive.google.com/file/d/..." value={formData.resumeUrl} onChange={handleInputChange} className="bg-background/50 border-input" />
                                         <p className="text-[10px] text-muted-foreground">Please share a public link to your resume.</p>
                                     </div>
                                 </div>
@@ -188,16 +192,16 @@ function RegisterPageContent() {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label htmlFor="company" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Company</Label>
-                                            <Input id="company" placeholder="e.g. Google" required className="bg-muted/30 border-muted-foreground/20" />
+                                            <Input id="company" placeholder="e.g. Google" required className="bg-background/50 border-input" />
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="designation" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Designation</Label>
-                                            <Input id="designation" placeholder="e.g. SDE II" required className="bg-muted/30 border-muted-foreground/20" />
+                                            <Input id="designation" placeholder="e.g. SDE II" required className="bg-background/50 border-input" />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <Label htmlFor="linkedin" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">LinkedIn</Label>
-                                        <Input id="linkedin" placeholder="https://linkedin.com/in/..." className="bg-muted/30 border-muted-foreground/20" />
+                                        <Input id="linkedin" placeholder="https://linkedin.com/in/..." className="bg-background/50 border-input" />
                                     </div>
                                 </div>
                             )}
